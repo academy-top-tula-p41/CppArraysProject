@@ -56,6 +56,41 @@ void ArrayBubbleSort(int* array, int size)
     }
 }
 
+void ArrayQuickSortReq(int* array, int begin, int end)
+{
+    int left{ begin };
+    int right{ end };
+    int pivot{ array[(begin + end) / 2] };
+
+    std::cout << "begin: " << begin << "\n";
+    std::cout << "end: " << end << "\n";
+    std::cout << "pivot: " << pivot << "\n";
+
+    do
+    {
+        while(array[left] < pivot) left++;
+        while (array[right] > pivot) right--;
+
+        if (left <= right)
+        {
+            Swap(array[left], array[right]);
+            left++;
+            right--;
+        }
+    } while (left <= right);
+    ArrayPrint(array, 20);
+    
+    if (begin < right)
+        ArrayQuickSortReq(array, begin, right);
+    if (left < end)
+        ArrayQuickSortReq(array, left, end);
+}
+
+void ArrayQuickSort(int* array, int size)
+{
+    ArrayQuickSortReq(array, 0, size - 1);
+}
+
 void ArrayCocktailSort(int* array, int size)
 {
     bool isSort;
@@ -88,6 +123,11 @@ void ArrayCocktailSort(int* array, int size)
     }
 }
 
+void ArrayHeapSort(int* array, int size)
+{
+
+}
+
 int main()
 {
     int size{ 20 };
@@ -98,6 +138,9 @@ int main()
 
     //ArraySelectSort(array, size);
     //ArrayBubbleSort(array, size);
-    ArrayCocktailSort(array, size);
+    //ArrayCocktailSort(array, size);
+    
+    ArrayQuickSort(array, size);
+
     ArrayPrint(array, size);
 }
