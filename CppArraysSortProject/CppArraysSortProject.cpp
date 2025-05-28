@@ -123,9 +123,32 @@ void ArrayCocktailSort(int* array, int size)
     }
 }
 
+void Heapify(int* array, int size, int indexParent)
+{
+    int indexLeft = 2 * indexParent + 1;
+    int indexRight = 2 * indexParent + 2;
+
+    int indexLargest = indexLeft;
+    if (indexRight < size && array[indexLargest] < array[indexRight])
+        indexLargest = indexRight;
+
+    if (indexLargest < size && array[indexLargest] > array[indexParent])
+    {
+        Swap(array[indexLargest], array[indexParent]);
+        Heapify(array, size, indexLargest);
+    }
+}
+
 void ArrayHeapSort(int* array, int size)
 {
+    for (int i = size / 2 - 1; i >= 0; i--)
+        Heapify(array, size, i);
 
+    for (int isize = size - 1; isize >= 0; isize--)
+    {
+        Swap(array[0], array[isize]);
+        Heapify(array, isize, 0);
+    }
 }
 
 int main()
@@ -139,8 +162,9 @@ int main()
     //ArraySelectSort(array, size);
     //ArrayBubbleSort(array, size);
     //ArrayCocktailSort(array, size);
-    
-    ArrayQuickSort(array, size);
+    //ArrayQuickSort(array, size);
+
+    ArrayHeapSort(array, size);
 
     ArrayPrint(array, size);
 }
